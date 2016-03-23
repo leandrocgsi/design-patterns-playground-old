@@ -9,7 +9,7 @@ import br.com.erudio.interfaces.Exporter;
 
 public class ExporterFactory {
 
-	public Exporter exportar(String readerType) {
+	public Exporter getExporter(String readerType) {
 		Exporter exporter = null;
 		if (readerType.equalsIgnoreCase("CSV")) {
 			exporter = new CSVExporter();
