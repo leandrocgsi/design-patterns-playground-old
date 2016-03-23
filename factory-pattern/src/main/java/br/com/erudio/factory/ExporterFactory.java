@@ -9,7 +9,7 @@ import br.com.erudio.interfaces.Exporter;
 
 public class ExporterFactory {
 
-	public Exporter getExporter(String readerType) {
+	public Exporter getExporter(String readerType) throws Exception {
 		Exporter exporter = null;
 		if (readerType.equalsIgnoreCase("CSV")) {
 			exporter = new CSVExporter();
@@ -21,6 +21,8 @@ public class ExporterFactory {
 			exporter = new XLSXExporter();
 		} else if (readerType.equalsIgnoreCase("XML")) {
 			exporter = new XMLExporter();
+		} else {
+			throw new Exception("Unsuported kind of exporter");
 		}
 		return exporter;
 	}
