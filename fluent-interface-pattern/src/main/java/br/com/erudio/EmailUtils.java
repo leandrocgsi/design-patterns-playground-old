@@ -63,7 +63,7 @@ public class EmailUtils implements Serializable {
 		return email;
 	}
 	
-	private ArrayList getRecipients(String to) throws AddressException {
+	public ArrayList getRecipients(String to) throws AddressException {
 		String tosWithoutSpaces = to.replaceAll("\\s","");;
 		StringTokenizer tok = new StringTokenizer(tosWithoutSpaces,";");
 		ArrayList recipients = new ArrayList();
@@ -74,42 +74,42 @@ public class EmailUtils implements Serializable {
 		return recipients;
 	}
 
-	public EmailUtils setHostname(String hostname) {
+	public EmailUtils withHostname(String hostname) {
 		this.hostname = hostname;
 		return this;
 	}
 
-	public EmailUtils setUsername(String username) {
+	public EmailUtils withUsername(String username) {
 		this.username = username;
 		return this;
 	}
 
-	public EmailUtils setPassword(String password) {
+	public EmailUtils withPassword(String password) {
 		this.password = password;
 		return this;
 	}
 
-	public EmailUtils setFrom(String from) {
+	public EmailUtils from(String from) {
 		this.from = from;
 		return this;
 	}
 
-	public EmailUtils setPort(int port) {
+	public EmailUtils usingPort(int port) {
 		this.port = port;
 		return this;
 	}
 
-	public EmailUtils setSsl(boolean ssl) {
+	public EmailUtils withSsl(boolean ssl) {
 		this.ssl = ssl;
 		return this;
 	}
 
-	public EmailUtils setSubject(String subject) {
+	public EmailUtils withSubject(String subject) {
 		this.subject = subject;
 		return this;
 	}
 
-	public EmailUtils setMessage(String message) {
+	public EmailUtils withMessage(String message) {
 		message = message;
 		return this;
 	}
