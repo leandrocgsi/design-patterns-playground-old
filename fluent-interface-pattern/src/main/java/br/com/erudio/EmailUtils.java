@@ -63,7 +63,7 @@ public class EmailUtils implements Serializable {
 		return email;
 	}
 	
-	public ArrayList getRecipients(String to) throws AddressException {
+	private ArrayList getRecipients(String to) throws AddressException {
 		String tosWithoutSpaces = to.replaceAll("\\s","");;
 		StringTokenizer tok = new StringTokenizer(tosWithoutSpaces,";");
 		ArrayList recipients = new ArrayList();
