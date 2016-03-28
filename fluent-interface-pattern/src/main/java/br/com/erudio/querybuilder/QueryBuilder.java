@@ -9,6 +9,8 @@ public class QueryBuilder {
 	private String sortFields;
 	private int pageSize;
 	private int currentPage;
+	private Object alias;
+	private String entity;
 	
 	public String getOrderBy(String alias) {
 		return " order by p.name asc";
@@ -66,7 +68,17 @@ public class QueryBuilder {
 		this.sortDirections = sortDirections;
 		return this;
 	}
-
+	
+	public QueryBuilder withEntity(String entity) {
+		this.entity = entity;
+		return this;
+	}
+	
+	public QueryBuilder withAlias(String to) {
+		this.alias = alias;
+		return this;
+	}
+	
 	public Integer inCurrentPage() {
 		return (Integer)1;
 	}

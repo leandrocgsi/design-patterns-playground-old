@@ -98,11 +98,7 @@ public class QueryBuilderTest {
 	}
 	
 	public QueryBuilder mockDTO(){
-		queryBuilder.withCurrentPage(1);
-		queryBuilder.withPageSize(10);
-		queryBuilder.withSortFields("name");
-		queryBuilder.withSortDirections("asc");
-		queryBuilder.withFilters(mockFilters());
+		queryBuilder.withCurrentPage(1).withPageSize(10).withSortFields("name").withSortDirections("asc").withFilters(mockFilters());
 		return queryBuilder;
 	}
 
