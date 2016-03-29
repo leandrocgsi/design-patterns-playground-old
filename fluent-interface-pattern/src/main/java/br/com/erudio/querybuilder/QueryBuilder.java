@@ -13,7 +13,8 @@ public class QueryBuilder {
 	private String entity;
 	
 	public String getOrderBy(String alias) {
-		return " order by p.name asc";
+		//return " order by p.name asc";
+		return " order by " + alias + "." + sortFields + " " + sortDirections;
 	}
 	
 	public String getWhereAndParameters(String alias) {
@@ -50,32 +51,32 @@ public class QueryBuilder {
 	}
 
 	public QueryBuilder withCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
+		currentPage = currentPage;
 		return this;
 	}
 
 	public QueryBuilder withPageSize(int pageSize) {
-		this.pageSize = pageSize;
+		pageSize = pageSize;
 		return this;
 	}
 
 	public QueryBuilder withSortFields(String sortFields) {
-		this.sortFields = sortFields;
+		sortFields = sortFields;
 		return this;
 	}
 
 	public QueryBuilder withSortDirections(String sortDirections) {
-		this.sortDirections = sortDirections;
+		sortDirections = sortDirections;
 		return this;
 	}
 	
 	public QueryBuilder withEntity(String entity) {
-		this.entity = entity;
+		entity = entity;
 		return this;
 	}
 	
 	public QueryBuilder withAlias(String to) {
-		this.alias = alias;
+		alias = alias;
 		return this;
 	}
 	
