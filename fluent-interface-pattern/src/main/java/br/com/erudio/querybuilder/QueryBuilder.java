@@ -2,25 +2,39 @@ package br.com.erudio.querybuilder;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class QueryBuilder {
 	
 	private Map<String, Object> filters;
 	private String sortDirections;
 	private String sortFields;
-	private int pageSize;
-	private int currentPage;
+	private Integer pageSize;
+	private Integer currentPage;
 	private Object alias;
 	private String entity;
 	
 	public String getOrderBy(String alias) {
-		//return " order by p.name asc";
 		return " order by " + alias + "." + sortFields + " " + sortDirections;
 	}
 	
 	public String getWhereAndParameters(String alias) {
-		return " where p.phone = :phone and p.name = :name and p.email = :email and 1 = 1 ";
+		String query = " where ";
+		if(filters == null) return query + "1 = 1 ";
+		for (Map.Entry<String, Object> entry : filters.entrySet()){
+		    String k = entry.getKey();
+			Object v = entry.getValue();
+		    if (entryIsEmpty(k, v)) {
+				query = query + alias + "." + k + " = :" + k + " and ";
+			}
+		}
+		return query + "1 = 1 ";
 	}
-
+	
+	private boolean entryIsEmpty(String k, Object v) {
+		return k != null && v != null && !StringUtils.isEmpty(k) && !StringUtils.isEmpty(v.toString());
+	}
+	
 	public String getHQLQuery(String string, String string2) {
 		return "select p from Person p"
 				+ "  where p.phone = :phone and"
@@ -29,9 +43,9 @@ public class QueryBuilder {
 				+ " order by p.name asc";
 	}
 	
-	public Map<String, Object> withFilters(Map<String, Object> filters) {
-		this.filters = filters;
-		return filters;
+	public QueryBuilder withFilters(Map<String, Object> filters) {
+		filters = filters;
+		return this;
 	}
 
 	public String getBaseSelectCount(String string, String string2) {
@@ -50,13 +64,13 @@ public class QueryBuilder {
 		return (Integer)0;
 	}
 
-	public QueryBuilder withCurrentPage(int currentPage) {
-		currentPage = currentPage;
+	public QueryBuilder withCurrentPage(Integer currentPage) {
+		this.currentPage = currentPage;
 		return this;
 	}
 
-	public QueryBuilder withPageSize(int pageSize) {
-		pageSize = pageSize;
+	public QueryBuilder withPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 		return this;
 	}
 
@@ -81,10 +95,12 @@ public class QueryBuilder {
 	}
 	
 	public Integer inCurrentPage() {
-		return (Integer)1;
+		if (currentPage == null) return 1;
+		return currentPage;
 	}
 
 	public Integer withStart() {
-		return (Integer)0;
+		if (pageSize == null) return 1;
+		return pageSize;
 	}
 }

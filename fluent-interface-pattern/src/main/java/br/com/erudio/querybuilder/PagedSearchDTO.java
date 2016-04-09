@@ -1,5 +1,6 @@
 package br.com.erudio.querybuilder;
 
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -53,11 +54,11 @@ public class PagedSearchDTO<T extends Serializable> implements Serializable {
 		return Integer.valueOf((getCurrentPage() - 1) * getPageSize());
 	}
 	
-	private String getOrderBy(String alias) {
+	public String getOrderBy(String alias) {
 		return " order by " + alias + "." + sortFields + " " + sortDirections + "";
 	}
 	
-	private String getWhereAndParameters(String alias) {
+	public String getWhereAndParameters(String alias) {
 		String query = " where ";
 		
 		for (Map.Entry<String, Object> entry : filters.entrySet()){
@@ -71,7 +72,7 @@ public class PagedSearchDTO<T extends Serializable> implements Serializable {
 	}
 
 	private boolean entryIsEmpty(String k, Object v) {
-		return !StringUtils.isEmpty(k) && !StringUtils.isEmpty(v.toString());
+		return k != null && v != null && !StringUtils.isEmpty(k) && !StringUtils.isEmpty(v.toString());
 	}
 	
 	/*void setParameters(Query query) {
@@ -96,24 +97,72 @@ public class PagedSearchDTO<T extends Serializable> implements Serializable {
 		return "select count(*) from " + entityName + " " + alias + " ";
 	}
 	
-	/* public Long getTotal(EntityManager entityManager, String alias, String entityName) {
+	/*public Long getTotal(EntityManager entityManager, String alias, String entityName) {
 		String select = getBaseSelectCount(alias, entityName) + getWhereAndParameters(alias);
 		Query query = entityManager.createQuery(select);
 		setParameters(query);
-		(Long)query.getSingleResult();
+		return (Long)query.getSingleResult();
 	}
 	
 	public Query getSearchQuery(EntityManager entityManager, String alias, String entityName) {
 		Query query = entityManager.createQuery(getHQLQuery(alias, entityName));
 		setParameters(query);
 		query.setFirstResult((getCurrentPage() - 1) * getPageSize());
-		query.setMaxResults(getPageSize());
+		return query.setMaxResults(getPageSize());
 	}
 	
 	public PagedSearchDTO<T> getPagedSearch(EntityManager entityManager, String alias, String entityName) {
 		Query searchQuery = getSearchQuery(entityManager, alias, entityName);
 		setList(searchQuery.getResultList());
 		setTotalResults(getTotal(entityManager, alias, entityName).intValue());
-		return this;
+		return null;
 	}*/
+
+	public Integer getTotalResults() {
+		return totalResults;
+	}
+
+	public void setTotalResults(Integer totalResults) {
+		this.totalResults = totalResults;
+	}
+
+	public String getSortFields() {
+		return sortFields;
+	}
+
+	public void setSortFields(String sortFields) {
+		this.sortFields = sortFields;
+	}
+
+	public String getSortDirections() {
+		return sortDirections;
+	}
+
+	public void setSortDirections(String sortDirections) {
+		this.sortDirections = sortDirections;
+	}
+
+	public Map<String, Object> getFilters() {
+		return filters;
+	}
+
+	public void setFilters(Map<String, Object> filters) {
+		this.filters = filters;
+	}
+
+	public List<T> getList() {
+		return list;
+	}
+
+	public void setList(List<T> list) {
+		this.list = list;
+	}
+
+	public void setCurrentPage(Integer currentPage) {
+		this.currentPage = currentPage;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
 }
